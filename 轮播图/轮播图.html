@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .box{
+            width: 650px;
+            height: 400px;
+            margin: 50px auto 0;
+        }
+        #bigImg{
+            width: 70.2%;
+            overflow: hidden;
+            height: 310px;
+            float: left;
+            position: relative;
+        }
+        #bigImg span,#smallImg span{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: #000000;
+            opacity: 0.7;
+            color: white;
+            width: 100%;
+            font-size: 13px;
+            padding: 5px;
+
+        }
+        #smallImg{
+            float: right;
+            width: 27.5%;
+            list-style: none;
+           
+        }
+        #smallImg li{
+            position: relative;
+            height: 75.8px;
+            margin-bottom: 2px;
+            
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="slider">
+            <!--大图 -->
+            <div id="bigImg">
+                <img src="img/1.jpg" alt="">
+                <span>巴黎 埃菲尔铁塔</span>
+            </div>
+
+            <!-- 小图 -->
+            <ul id="smallImg">
+                <li><img src="img/1.jpg" alt=""><span>巴黎 埃菲尔铁塔</span></li>
+                <li><img src="img/2.jpg" alt=""><span>纽约</span></li>
+                <li><img src="img/3.jpg" alt=""><span>上海</span></li>
+                <li><img src="img/4.jpg" alt=""><span>长城</span></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        // 获取要操作的标签
+        var bigimg = document.querySelector('#bigImg');
+        var lis = document.querySelectorAll('li');
+
+        // 纪录当前初始的第一张显示图片
+        var first = 0;
+
+        // 获取轮播时索引值变化的内容
+        function changeIndex(){
+            if(first==lis.length){
+                first=0;
+            }
+            slider();
+            first++;
+        }
+
+        // 图片轮播的方法
+        function slider(){
+            // 将小图的图片路径给大图
+            bigimg.children[0].src=lis[first].children[0].src;
+            bigimg.children[1].innerHTML=lis[first].children[1].innerHTML;
+            // 小图样式改变
+            for(var i=0;i<lis.length;i++){
+                lis[i].style.opacity='0.5';
+                if(i==first){
+                    lis[i].style.opacity='1';
+                }
+            }
+
+        }
+        changeIndex()
+
+        var time = setInterval(changeIndex,1000);
+
+        document.querySelector('#smallImg').onmouseover=function(){
+            clearInterval(time);
+        }
+        document.querySelector('#smallImg').onmouseout=function(){
+            time = setInterval(changeIndex,1000);
+        }
+
+        // 点击事件，点击修改图片路径
+
+
+    </script>
+</body>
+</html>
